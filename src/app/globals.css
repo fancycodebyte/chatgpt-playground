@@ -1,0 +1,38 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+* {
+  font-family: "Inter", sans-serif;
+}
+html {
+  font-family: "Inter", sans-serif;
+  margin: 0;
+}
+body {
+  margin: 0;
+}
+textarea {
+  resize: none;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.homepage {
+  height: calc(100vh - 62px);
+  display: flex;
+  flex-direction: column;
+}
+.rc-slider-handle:focus {
+  border-color: #10a37f !important;
+}
+
+.rc-slider-handle:active {
+  border-color: #10a37f !important;
+  box-shadow: none !important;
+}

@@ -1,0 +1,33 @@
+.navbar {
+  background: white;
+  border-bottom: 1px solid #ececf1;
+  height: 60px;
+}
+.navbarInner {
+  padding: 20px 31px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.link {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #6e6e80;
+  text-decoration: none;
+  margin-right: 24px;
+  cursor: pointer;
+}
+.link:hover {
+  color: #353740;
+}
+.link:last-child {
+  margin-right: 0;
+}
+.greenLink {
+  color: #10a37f;
+}
+.greenLink:hover {
+  color: #10a37f;
+}

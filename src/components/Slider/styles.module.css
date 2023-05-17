@@ -1,0 +1,37 @@
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 9px;
+}
+.label {
+  display: flex;
+  align-items: center;
+  color: #353740;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+}
+.input {
+  width: 36px;
+  height: 18px;
+  border: none;
+  text-align: end;
+  padding: 4px 5px 3px;
+  line-height: 15px;
+  font-size: 14px;
+  border-radius: 3px;
+  color: #353740;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  border: 1px solid transparent;
+}
+
+.input:focus {
+  border-color: #10a37f;
+  box-shadow: 0 0 0 0.2rem rgba(16, 163, 127, 0.3);
+  outline: 0;
+}
+.input:hover {
+  border-color: #d9d9e3;
+}

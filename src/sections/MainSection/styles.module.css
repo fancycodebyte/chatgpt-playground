@@ -1,0 +1,23 @@
+.mainSection {
+  padding: 24px;
+  flex: 1;
+  display: flex;
+}
+
+.system {
+  height: 100%;
+  flex: 1.5 1;
+  display: flex;
+}
+.prompts {
+  height: 100%;
+  flex: 3 1;
+  padding-left: 24px;
+  display: flex;
+}
+.settings {
+  height: 100%;
+  width: calc(192px + 24px);
+  padding-left: 24px;
+  display: flex;
+}

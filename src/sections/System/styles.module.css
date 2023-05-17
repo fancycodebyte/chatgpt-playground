@@ -1,0 +1,38 @@
+.system {
+  background: #ffffff;
+  border: 1px solid #c5c5d2;
+  border-radius: 3px;
+  width: 100%;
+  padding: 22px 14px 10px;
+  display: flex;
+  flex-direction: column;
+}
+.heading {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 16px;
+  text-transform: uppercase;
+  margin: 0;
+  color: 202123;
+  margin-bottom: 12px;
+}
+.input {
+  border: none;
+  height: 100%;
+  flex: 1;
+  overflow: auto;
+  width: 100%;
+  resize: none;
+  font-size: 16px;
+  line-height: 24px;
+  box-sizing: border-box;
+  color: #353740;
+  font-weight: 400;
+}
+.input:focus {
+  outline: none;
+}
+.input::placeholder {
+  color: #8e8ea0;
+}
