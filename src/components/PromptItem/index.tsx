@@ -1,19 +1,19 @@
 "use client";
-import React, { FC, useCallback, useEffect, useRef, useState } from "react";
+import React, { FC, useEffect, useRef } from "react";
 import Image from "next/image";
 import styles from "./styles.module.css";
 import autosize from "autosize";
-import { Prompt, PromptType } from "@/types";
-import debounce from "lodash.debounce";
+import { PromptType } from "@/types";
+import { useRootContext } from "@/context/RootContext";
 
 interface Props {
   index: number;
-  prompt: Prompt;
-  prompts: Prompt[];
-  setPrompts: (_prompt: Prompt[]) => void;
+  prompt: PromptType;
 }
 
-const PromptItem: FC<Props> = ({ index, prompt, prompts, setPrompts }) => {
+const PromptItem: FC<Props> = ({ index, prompt }) => {
+  const { removePrompt, toggleRole, updateMessage } = useRootContext();
+
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
 
   useEffect(() => {
@@ -22,29 +22,11 @@ const PromptItem: FC<Props> = ({ index, prompt, prompts, setPrompts }) => {
     }
   });
 
-  const changeType = (_prompt: Prompt) => {
-    const tempType =
-      _prompt.type === PromptType.USER ? PromptType.ASSISTANT : PromptType.USER;
-
-    const tempPrompts = prompts.map((i) =>
-      i.id === _prompt.id ? { ...i, type: tempType } : i
-    );
-    setPrompts(tempPrompts);
-  };
-
-  const changeHandler = (_message: string) => {
-    var tempPrompts = [...prompts];
-    tempPrompts = prompts.map((i) =>
-      i.id === prompt.id ? { ...i, message: _message } : i
-    );
-    setPrompts(tempPrompts);
-  };
-
-  const removePrompt = (_prompt: Prompt) => {
-    var tempPrompts = [...prompts];
-    tempPrompts = tempPrompts.filter((i) => i.id !== _prompt.id);
-    setPrompts(tempPrompts);
-  };
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
 
   return (
     <label htmlFor={`message${index}`} className={styles.promptItem}>
@@ -53,11 +35,11 @@ const PromptItem: FC<Props> = ({ index, prompt, prompts, setPrompts }) => {
           onClick={(e) => {
             e.stopPropagation();
             e.preventDefault();
-            changeType(prompt);
+            toggleRole(prompt.id);
           }}
           className={styles.promptTypeText}
         >
-          {prompt.type}
+          {prompt.role}
         </span>
       </div>
       <div className={styles.promptMessage}>
@@ -68,14 +50,14 @@ const PromptItem: FC<Props> = ({ index, prompt, prompts, setPrompts }) => {
           className={styles.promptMessageInput}
           placeholder={"Enter a user message here"}
           onChange={(e) => {
-            changeHandler(e.target.value);
+            updateMessage(prompt.id, e.target.value);
           }}
           value={prompt.message}
         ></textarea>
       </div>
       <div className={styles.promptRemove}>
         <Image
-          onClick={() => removePrompt(prompt)}
+          onClick={() => removePrompt(prompt.id)}
           src="/assets/icons/remove.svg"
           alt="remove"
           width={20}

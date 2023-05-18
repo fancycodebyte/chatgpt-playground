@@ -1,10 +1,25 @@
-export enum PromptType {
+export enum RoleType {
   USER = "user",
-  ASSISTANT = "assistant"
+  ASSISTANT = "assistant",
+  SYSTEM = "system"
 }
 
-export interface Prompt {
+export interface PromptType {
   id: string;
-  type: PromptType.USER | PromptType.ASSISTANT;
+  role: RoleType.USER | RoleType.ASSISTANT | RoleType.SYSTEM;
   message: string;
 }
+
+export interface ConfigType {
+  model: string;
+  temperature?: any;
+}
+
+export interface SystemPromptType {
+  role: RoleType.SYSTEM;
+  message: string;
+}
+
+export type OpenAIRequest = {
+  messages: PromptType[];
+} & ConfigType;

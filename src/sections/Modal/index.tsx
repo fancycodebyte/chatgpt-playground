@@ -1,18 +1,26 @@
-import React, { FC } from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import styles from "./styles.module.css";
 import Image from "next/image";
+import { useRootContext } from "@/context/RootContext";
 
-interface Props {
-  setShowModal: (_bool: boolean) => void;
-}
+const Modal = () => {
+  const { modal, setModal, addToken, clearToken, token } = useRootContext();
+  const [api, setApi] = useState(token);
 
-const Modal: FC<Props> = ({ setShowModal }) => {
   const closeModal = () => {
-    setShowModal(false);
+    setModal(false);
   };
 
+  useEffect(() => {
+    setApi(token);
+  }, [token]);
+
   return (
-    <div className={styles.overlay}>
+    <div
+      className={styles.overlay}
+      style={{ display: modal ? "flex" : "none" }}
+    >
       <div className={styles.modal}>
         <span className={styles.close} onClick={closeModal}>
           <Image
@@ -35,16 +43,27 @@ const Modal: FC<Props> = ({ setShowModal }) => {
           sent to the server. If you would like more information look at the
           Github Repository!
         </p>
-        <input className={styles.input} placeholder="sk-NhU98cac878..." />
+        <input
+          value={api}
+          onChange={(e) => setApi(e.target.value)}
+          className={styles.input}
+          placeholder="sk-NhU98cac878..."
+        />
         <div className={styles.btns}>
           <button
             className={`${styles.btn} ${styles.clearBtn}`}
-            onClick={closeModal}
+            onClick={() => {
+              clearToken();
+              closeModal();
+            }}
           >
             Clear Token
           </button>
           <button
-            onClick={closeModal}
+            onClick={() => {
+              addToken(api);
+              closeModal();
+            }}
             className={`${styles.btn} ${styles.addBtn}`}
           >
             Add

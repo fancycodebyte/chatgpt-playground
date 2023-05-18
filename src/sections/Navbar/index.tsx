@@ -1,11 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import styles from "./styles.module.css";
 import Link from "next/link";
-import Modal from "@/components/Modal";
+import { useRootContext } from "@/context/RootContext";
 
 const Navbar = () => {
-  const [showModal, setShowModal] = useState(false);
+  const { setModal } = useRootContext();
 
   return (
     <div className={styles.navbar}>
@@ -35,13 +35,12 @@ const Navbar = () => {
             </Link>
           </div>
           <div className={styles.sideLink}>
-            <span className={styles.link} onClick={() => setShowModal(true)}>
+            <span className={styles.link} onClick={() => setModal(true)}>
               Preferences
             </span>
           </div>
         </div>
       </div>
-      {showModal && <Modal setShowModal={setShowModal} />}
     </div>
   );
 };

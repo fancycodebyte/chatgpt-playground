@@ -1,35 +1,29 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import styles from "./styles.module.css";
 import PromptItem from "@/components/PromptItem";
 import Image from "next/image";
-import { Prompt, PromptType } from "@/types";
-import { v4 as uuidv4 } from "uuid";
+import { RoleType } from "@/types";
+import { useRootContext } from "@/context/RootContext";
 
 const Prompts = () => {
-  const [prompts, setPrompts] = useState<Prompt[]>([
-    {
-      id: uuidv4(),
-      type: PromptType.USER,
-      message: ""
-    }
-  ]);
+  const { prompts, addPrompt, submit, loading } = useRootContext();
 
-  const addMessage = () => {
+  const handleAddMessage = () => {
     if (prompts.length > 0) {
-      let type: PromptType.ASSISTANT | PromptType.USER;
+      let role: RoleType.ASSISTANT | RoleType.USER;
       const tempPrompts = [...prompts];
       const lastPrompt = tempPrompts.pop();
       if (lastPrompt) {
-        if (lastPrompt.type === PromptType.ASSISTANT) {
-          type = PromptType.USER;
+        if (lastPrompt.role === RoleType.ASSISTANT) {
+          role = RoleType.USER;
         } else {
-          type = PromptType.ASSISTANT;
+          role = RoleType.ASSISTANT;
         }
-        setPrompts((prev) => [...prev, { id: uuidv4(), type, message: "" }]);
+        addPrompt("", false, role);
       }
     } else {
-      setPrompts([{ id: uuidv4(), type: PromptType.USER, message: "" }]);
+      addPrompt();
     }
   };
 
@@ -43,26 +37,36 @@ const Prompts = () => {
     scrollToBottom();
   }, [prompts]);
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Enter" && e.metaKey) {
+        submit();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [submit]);
+
   return (
     <div className={styles.prompts}>
       <div className={styles.messages}>
         {prompts.map((item, index) => (
-          <PromptItem
-            key={index}
-            index={index}
-            prompt={item}
-            prompts={prompts}
-            setPrompts={setPrompts}
-          />
+          <PromptItem key={index} index={index} prompt={item} />
         ))}
-        <div className={styles.addMessage} onClick={addMessage}>
+        <div className={styles.addMessage} onClick={handleAddMessage}>
           <Image src="/assets/icons/add.svg" alt="add" height={20} width={20} />
           <span className={styles.addMessageText}>Add message</span>
         </div>
         <div ref={bottomEl}></div>
       </div>
       <div className={styles.submitBtnWrap}>
-        <button className={styles.submitBtn}>Submit</button>
+        <button className={styles.submitBtn} onClick={submit}>
+          {loading ? "Loading" : "Submit"}
+        </button>
       </div>
     </div>
   );

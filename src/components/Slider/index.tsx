@@ -3,9 +3,10 @@ import React, { useState } from "react";
 import RCSlider from "rc-slider";
 import styles from "./styles.module.css";
 import "rc-slider/assets/index.css";
+import { useRootContext } from "@/context/RootContext";
 
 const Slider = () => {
-  const [value, setValue] = useState<any>(0.5);
+  const { config, updateConfig } = useRootContext();
 
   return (
     <div>
@@ -13,19 +14,21 @@ const Slider = () => {
         <span className={styles.label}>Temperature</span>
         <input
           className={styles.input}
-          value={value}
+          value={config.temperature}
           type="number"
           min={0}
           max={1}
-          onChange={(e) => setValue(Number(e.target.value))}
+          onChange={(e) =>
+            updateConfig({ temperature: Number(e.target.value) })
+          }
         />
       </div>
       <RCSlider
         min={0}
         max={1}
         step={0.01}
-        value={value}
-        onChange={(e) => setValue(e)}
+        value={config.temperature}
+        onChange={(e) => updateConfig({ temperature: e })}
         handleStyle={{
           borderColor: "#c5c5d2",
           background: "white",

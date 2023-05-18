@@ -1,5 +1,6 @@
 import Navbar from "@/sections/Navbar";
 import "./globals.css";
+import Wrap from "@/sections/Wrap";
 
 export const metadata = {
   title: "Playground - OpenAI API",
@@ -14,8 +15,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Navbar />
-        {children}
+        <Wrap>
+          <Navbar />
+          {children}
+        </Wrap>
       </body>
     </html>
   );

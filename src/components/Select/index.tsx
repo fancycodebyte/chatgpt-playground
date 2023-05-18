@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import ReSelect, { StylesConfig } from "react-select";
 import styles from "./styles.module.css";
+import { useRootContext } from "@/context/RootContext";
 
 interface Props {
   label: string;
@@ -12,6 +13,8 @@ interface GroupedOption {
 }
 
 const Select: FC<Props> = ({ label }) => {
+  const { updateConfig } = useRootContext();
+
   const options = [
     { value: "gpt-3.5-turbo-0301", label: "gpt-3.5-turbo-0301" },
     { value: "gpt-3.5-turbo", label: "gpt-3.5-turbo" }
@@ -81,6 +84,7 @@ const Select: FC<Props> = ({ label }) => {
         components={{ IndicatorSeparator: null }}
         placeholder="Select model"
         menuPlacement="auto"
+        onChange={(e) => updateConfig({ model: e.value })}
       />
     </div>
   );
