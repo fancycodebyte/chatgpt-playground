@@ -29,11 +29,28 @@
   line-height: 16px;
   text-transform: uppercase;
   border-radius: 2px;
+  user-select: none;
 }
 .promptMessage {
   flex-grow: 1;
   display: flex;
   margin-right: 12px;
+}
+.promptRemove {
+  flex-shrink: 0;
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  transition: opacity 0.1s ease-out;
+}
+.promptRemove:hover {
+  opacity: 1 !important;
+}
+.promptItem:hover .promptRemove {
+  opacity: 0.4;
+}
+.promptItem:hover .promptTypeText {
+  background-color: #d9d9e3;
 }
 .promptMessageInput {
   width: 100%;
@@ -57,20 +74,4 @@
 .promptMessageInput:focus-visible {
   box-shadow: rgb(16, 163, 127) 0px 0px 0px 1px;
   outline: none;
-}
-.promptRemove {
-  flex-shrink: 0;
-  opacity: 0;
-  display: flex;
-  align-items: center;
-  transition: opacity 0.1s ease-out;
-}
-.promptRemove:hover {
-  opacity: 1 !important;
-}
-.promptItem:hover .promptRemove {
-  opacity: 0.4;
-}
-.promptItem:hover .promptTypeText {
-  background-color: #d9d9e3;
 }
