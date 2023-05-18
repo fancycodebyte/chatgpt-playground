@@ -1,0 +1,111 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  background-color: rgb(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal {
+  max-width: 42rem;
+  box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+    rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.1) 0px 8px 10px -6px;
+  padding: 16px;
+  background-color: rgb(55, 65, 81);
+  border-radius: 4px;
+  position: relative;
+}
+.close {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  cursor: pointer;
+  transition: 0.3s all;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 3px;
+}
+.close:hover {
+  background: rgb(31, 41, 55);
+}
+.heading {
+  font-size: 24px;
+  line-height: 32px;
+  margin: 0;
+  color: white;
+  margin-bottom: 16px;
+}
+.text {
+  color: white;
+  margin: 0;
+  font-size: 16px;
+  line-height: 24px;
+  margin-bottom: 16px;
+}
+.text > a {
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.3s all;
+}
+.text > a:hover {
+  text-decoration: underline;
+}
+.input {
+  color: white;
+  width: 100%;
+  padding: 16px;
+  font-size: 16px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  background: rgb(31, 41, 55);
+  border: none;
+  outline: none;
+  margin-bottom: 16px;
+}
+.input::placeholder {
+  color: #8e8ea0;
+}
+.btns {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.btn {
+  background-color: #10a37f;
+  font-size: 14px;
+  line-height: 20px;
+  padding: 6px 24px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: 3px;
+  font-weight: 400;
+  line-height: 1.4;
+  transition: box-shadow 0.3s, background-color 0.3s, color 0.3s;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  color: white;
+  margin-left: 3px;
+  margin-bottom: 3px;
+}
+
+.btn:active {
+  background-color: #1b5d4a;
+}
+.btn:focus {
+  box-shadow: 0 0 0 3px rgba(16, 163, 127, 0.3);
+}
+.btn:hover {
+  background-color: #1a7f64;
+}
+.clearBtn {
+  margin-right: 10px;
+  background: transparent;
+}
