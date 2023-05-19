@@ -212,6 +212,7 @@ export default function RootContextProvider({ children }: PropsWithChildren) {
         controller.abort();
         openAIStreamRef.current?.cancel();
         openAIStreamRef.current = null;
+        setLoading(false);
         return 
       }
 
@@ -227,6 +228,11 @@ export default function RootContextProvider({ children }: PropsWithChildren) {
         messages_,
         signal
       );
+
+      if (!response) {
+        setLoading(false);
+        return;
+      }
 
       if (response.ok) {
         setError("");
