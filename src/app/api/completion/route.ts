@@ -5,6 +5,8 @@ import { getOpenAICompletion } from "@/utils/api";
 export async function POST(req: Request) {
   const { model, temperature, messages } = await req.json();
 
+  const signal = req.signal;
+
   if (!messages) {
     return new Response("Missing messages", { status: 400 });
   }
@@ -26,7 +28,7 @@ export async function POST(req: Request) {
   };
 
   try {
-    const stream = await getOpenAICompletion(token, payload);
+    const stream = await getOpenAICompletion(token, payload, signal);
     return new Response(stream);
   } catch (e: any) {
     return new Response(e.message, { status: 500 });
