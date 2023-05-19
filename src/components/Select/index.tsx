@@ -31,7 +31,8 @@ const Select: FC<Props> = ({ label }) => {
     control: (base, state) => ({
       ...base,
       borderColor: "#C5C5D2",
-      height: 36,
+      height: "30px",
+      minHeight: "30px",
       borderRadius: "4px",
       background: "white",
       fontSize: "13px",
@@ -49,6 +50,22 @@ const Select: FC<Props> = ({ label }) => {
         borderColor: "#10a37f",
         boxShadow: "0 !important"
       }
+    }),
+    valueContainer: (provided) => ({
+      ...provided,
+      height: "30px",
+      padding: "0 6px"
+    }),
+    indicatorSeparator: (state) => ({
+      display: "none"
+    }),
+    indicatorsContainer: (base) => ({
+      ...base,
+      height: "30px"
+    }),
+    singleValue: (props) => ({
+      ...props,
+      marginBottom: "2px"
     }),
     option: (base, state) => ({
       ...base,

@@ -16,3 +16,14 @@
   line-height: 24px;
   color: #202123;
 }
+
+@media screen and (max-width: 650px) {
+  .heading {
+    background: white;
+    border-bottom: none;
+  }
+  .headingInner {
+    padding: 16px 16px;
+    padding-bottom: 10px;
+  }
+}

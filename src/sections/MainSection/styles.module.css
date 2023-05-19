@@ -21,6 +21,7 @@
   width: calc(192px + 24px);
   padding-left: 24px;
   display: flex;
+  box-sizing: border-box;
 }
 .separator {
   display: none;
@@ -49,6 +50,7 @@
     display: block;
     height: 10px;
     width: 100%;
+    box-sizing: border-box;
   }
 }
 
