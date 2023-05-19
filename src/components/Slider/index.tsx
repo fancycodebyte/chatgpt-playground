@@ -17,7 +17,7 @@ const Slider = () => {
           value={config.temperature}
           type="number"
           min={0}
-          max={1}
+          max={2}
           onChange={(e) =>
             updateConfig({ temperature: Number(e.target.value) })
           }
@@ -25,7 +25,7 @@ const Slider = () => {
       </div>
       <RCSlider
         min={0}
-        max={1}
+        max={2}
         step={0.01}
         value={config.temperature}
         onChange={(e) => updateConfig({ temperature: e })}
