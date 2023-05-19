@@ -269,6 +269,7 @@ export default function RootContextProvider({ children }: PropsWithChildren) {
           prompt.message += chunkValue;
           updateMessage(prompt.id, prompt.message);
         }
+        openAIStreamRef.current = null;
       } else {
         const err: any = await response.json();
         if (err.error.type === "invalid_request_error") {
