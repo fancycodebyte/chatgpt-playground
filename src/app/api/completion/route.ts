@@ -2,10 +2,6 @@ import { defaultConfig } from "@/context/RootContext";
 import { OpenAIRequest } from "@/types";
 import { getOpenAICompletion } from "@/utils/api";
 
-export const config = {
-  runtime: "edge"
-};
-
 export async function POST(req: Request) {
   const { model, temperature, messages } = await req.json();
 
