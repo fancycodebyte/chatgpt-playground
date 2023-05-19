@@ -15,6 +15,7 @@
 
 * {
   font-family: ColfaxAI, helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 html {
   font-family: ColfaxAI, helvetica, sans-serif;
