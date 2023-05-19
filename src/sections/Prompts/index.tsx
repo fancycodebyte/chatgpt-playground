@@ -66,7 +66,10 @@ const Prompts = () => {
       </div>
       <div className={styles.submitBtnWrap}>
         {toggleError && <Error />}
-        <button className={styles.submitBtn} onClick={submit}>
+        <button
+          className={`${styles.submitBtn} ${loading ? styles.cancelBtn : ""} `}
+          onClick={submit}
+        >
           {loading ? "Cancel" : "Submit"}
         </button>
       </div>

@@ -61,6 +61,19 @@
   user-select: none;
   color: white;
 }
+.cancelBtn {
+  background-color: #ececf1 !important;
+  color: #353740 !important;
+}
+.cancelBtn:active {
+  background-color: #c5c5d2 !important;
+}
+.cancelBtn:hover {
+  background-color: #d9d9e3 !important;
+}
+.cancelBtn:focus {
+  box-shadow: none !important;
+}
 
 .submitBtn:active {
   background-color: #1b5d4a;
