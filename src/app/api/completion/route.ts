@@ -22,11 +22,6 @@ export async function POST(req: Request) {
     model: model || defaultConfig.model,
     temperature: temperature || defaultConfig.temperature,
     stream: true
-    // n: 1,
-    // max_tokens: 256,
-    // top_p: 1,
-    // frequency_penalty: 0,
-    // presence_penalty: 0
   };
 
   const payload: OpenAIRequest = {

@@ -1,5 +1,10 @@
 "use client";
-import React, { PropsWithChildren, createContext, useCallback } from "react";
+import React, {
+  PropsWithChildren,
+  createContext,
+  useCallback,
+  useState
+} from "react";
 import { ConfigType, PromptType, RoleType, SystemPromptType } from "@/types";
 import { v4 as uuidv4 } from "uuid";
 import secureLocalStorage from "react-secure-storage";
@@ -38,7 +43,10 @@ const defaultContext = {
   setModal: (val: boolean) => {},
   error: "",
   toggleError: false,
-  setToggleError: (val: boolean) => {}
+  setToggleError: (val: boolean) => {},
+  mobileMenu: false,
+  openMobileMenu: () => {},
+  closeMobileMenu: () => {}
 };
 
 const RootContext = createContext<{
@@ -65,14 +73,19 @@ const RootContext = createContext<{
   error: string;
   toggleError: boolean;
   setToggleError: (val: boolean) => void;
+  mobileMenu: boolean;
+  openMobileMenu: () => void;
+  closeMobileMenu: () => void;
 }>(defaultContext);
 
 export default function RootContextProvider({ children }: PropsWithChildren) {
   const [token, setToken] = React.useState("");
   const [loading, setLoading] = React.useState(false);
+  // const [modelsLoading, setModelsLoading] = useState(false);
   const [error, setError] = React.useState("");
   const [toggleError, setToggleError] = React.useState(false);
   const [modal, setModal] = React.useState(false);
+  const [mobileMenu, setMobileMenu] = React.useState(false);
 
   const [systemPrompt, setSystemPrompt] = React.useState<SystemPromptType>(
     defaultContext.systemPrompt
@@ -97,6 +110,14 @@ export default function RootContextProvider({ children }: PropsWithChildren) {
   const clearToken = () => {
     setToken("");
     secureLocalStorage.removeItem("open-ai-token");
+  };
+
+  const openMobileMenu = () => {
+    setMobileMenu(true);
+  };
+
+  const closeMobileMenu = () => {
+    setMobileMenu(false);
   };
 
   const updateSystemPrompt = (message: string) => {
@@ -165,9 +186,9 @@ export default function RootContextProvider({ children }: PropsWithChildren) {
       const response = await customApi(token, config, systemPrompt, messages_);
 
       if (response.ok) {
-        const res = await response.json();
-
-        const { body, ok } = res;
+        setError("");
+        setToggleError(false);
+        const { body, ok } = response;
 
         if (!body) return;
         const reader = body.getReader();
@@ -207,8 +228,9 @@ export default function RootContextProvider({ children }: PropsWithChildren) {
               );
               setToggleError(true);
               break;
-
             default:
+              setError("An error has occurred. Please try again!");
+              setToggleError(true);
               break;
           }
         } else {
@@ -220,6 +242,8 @@ export default function RootContextProvider({ children }: PropsWithChildren) {
               setToggleError(true);
               break;
             default:
+              setError("An error has occurred. Please try again!");
+              setToggleError(true);
               break;
           }
         }
@@ -248,6 +272,25 @@ export default function RootContextProvider({ children }: PropsWithChildren) {
     [submit]
   );
 
+  // const getModels = useCallback(async () => {
+  //   if (modelsLoading) return;
+  //   setModelsLoading(true);
+
+  //   const response = await fetchModels(token);
+
+  //   if (response.ok) {
+  //     console.log(response);
+  //   } else {
+  //     console.log(response);
+  //   }
+
+  //   setLoading(false);
+  // }, [modelsLoading, token]);
+
+  // useEffect(() => {
+  //   if (token) getModels();
+  // }, [getModels, token]);
+
   const value = React.useMemo(
     () => ({
       systemPrompt,
@@ -268,7 +311,10 @@ export default function RootContextProvider({ children }: PropsWithChildren) {
       modal,
       setModal,
       toggleError,
-      setToggleError
+      setToggleError,
+      mobileMenu,
+      openMobileMenu,
+      closeMobileMenu
     }),
     [
       systemPrompt,
@@ -281,7 +327,8 @@ export default function RootContextProvider({ children }: PropsWithChildren) {
       token,
       modal,
       toggleError,
-      setToggleError
+      setToggleError,
+      mobileMenu
     ]
   );
 

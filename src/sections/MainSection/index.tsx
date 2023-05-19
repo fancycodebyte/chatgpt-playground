@@ -10,6 +10,7 @@ const MainSection = () => {
       <div className={styles.system}>
         <System />
       </div>
+      <div className={styles.separator}></div>
       <div className={styles.prompts}>
         <Prompts />
       </div>

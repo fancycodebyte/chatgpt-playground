@@ -36,3 +36,15 @@
 .input::placeholder {
   color: #8e8ea0;
 }
+
+@media screen and (max-width: 850px) {
+  .system {
+    border: none;
+    padding: 0;
+  }
+}
+@media screen and (max-width: 649px) {
+  .system {
+    padding: 16px;
+  }
+}

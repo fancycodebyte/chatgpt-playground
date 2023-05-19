@@ -2,12 +2,23 @@
   background: white;
   border-bottom: 1px solid #ececf1;
   height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .navbarInner {
-  padding: 20px 31px;
+  width: 100%;
+  padding: 0 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+.mainLinks {
+  display: flex;
+  align-items: center;
+}
+.logo {
+  margin-right: 24px;
 }
 .link {
   font-style: normal;
@@ -30,4 +41,22 @@
 }
 .greenLink:hover {
   color: #10a37f;
+}
+.sideLink {
+  display: flex;
+  align-items: center;
+}
+.hambergerIcon {
+  display: none;
+}
+@media screen and (max-width: 980px) {
+  .logo {
+    margin-right: 0;
+  }
+  .link {
+    display: none !important;
+  }
+  .hambergerIcon {
+    display: inline-block;
+  }
 }

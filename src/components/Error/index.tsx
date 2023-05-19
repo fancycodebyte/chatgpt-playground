@@ -16,7 +16,10 @@ const Error = () => {
           width={22}
         />
       </span>
-      <p className={styles.errorText}>{error}</p>
+      <p
+        className={styles.errorText}
+        dangerouslySetInnerHTML={{ __html: error }}
+      ></p>
     </div>
   );
 };

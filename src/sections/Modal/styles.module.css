@@ -109,3 +109,9 @@
   margin-right: 10px;
   background: transparent;
 }
+
+@media screen and (max-width: 760px) {
+  .modal {
+    width: 90%;
+  }
+}

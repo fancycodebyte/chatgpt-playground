@@ -5,6 +5,7 @@
   background: white;
   padding: 12px 18px;
   cursor: pointer;
+  box-sizing: border-box;
 }
 .promptItem:hover {
   background: #f7f7f8;
@@ -74,4 +75,67 @@
 .promptMessageInput:focus-visible {
   box-shadow: rgb(16, 163, 127) 0px 0px 0px 1px;
   outline: none;
+}
+
+@media screen and (max-width: 850px) {
+  .promptItem {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    padding: 12px 0px;
+    position: relative;
+  }
+  .promptItem:hover {
+    background: #fff;
+  }
+  .promptItem:active {
+    background: #fff;
+  }
+  .promptItem:focus {
+    background: #fff;
+  }
+  .promptType {
+    width: 100%;
+    margin-right: 0px;
+  }
+  .promptTypeText {
+    padding: 16px 0;
+    display: inline-block;
+  }
+  .promptMessage {
+    margin-right: 0;
+  }
+  .promptRemove {
+    position: absolute;
+    right: 24px;
+    top: 24px;
+    opacity: 1;
+  }
+  .promptRemove:hover {
+    opacity: 0.4 !important;
+  }
+  .promptItem:hover .promptRemove {
+    opacity: 0.4;
+  }
+  .promptItem:hover .promptTypeText {
+    background-color: #fff;
+  }
+  .promptMessageInput {
+    padding: 0;
+  }
+  .promptMessageInput::placeholder {
+    color: #8e8ea0;
+  }
+  .promptMessageInput:focus {
+    box-shadow: none;
+  }
+  .promptMessageInput:focus-visible {
+    box-shadow: none;
+    outline: none;
+  }
+}
+@media screen and (max-width: 649px) {
+  .promptItem {
+    padding: 12px 16px;
+  }
 }

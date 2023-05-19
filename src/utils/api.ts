@@ -11,16 +11,16 @@ import {
 } from "eventsource-parser";
 
 export const customApi = async (
-  token: string,
+  apiKey: string,
   config: ConfigType,
   systemPrompt: SystemPromptType,
   messages_: PromptType[]
 ) => {
-  const response = await fetch("/api/playground", {
+  const response = await fetch("/api/completion", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${apiKey}`
     },
     body: JSON.stringify({
       ...config,
@@ -34,8 +34,19 @@ export const customApi = async (
   return response;
 };
 
+export const fetchModels = async (apiKey: string) => {
+  const response = await fetch("/api/models", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${apiKey}`
+    }
+  });
+
+  return response;
+};
+
 export const getOpenAICompletion = async (
-  token: string,
+  apiKey: string,
   payload: OpenAIRequest
 ) => {
   const encoder = new TextEncoder();
@@ -43,7 +54,7 @@ export const getOpenAICompletion = async (
 
   const response = await fetch("https://api.openai.com/v1/chat/completions", {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${apiKey}`,
       "Content-Type": "application/json"
     },
     method: "POST",

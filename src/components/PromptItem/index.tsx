@@ -1,10 +1,10 @@
 "use client";
-import React, { FC, useEffect, useRef } from "react";
+import React, { FC, useEffect, useState } from "react";
 import Image from "next/image";
 import styles from "./styles.module.css";
-import autosize from "autosize";
 import { PromptType } from "@/types";
 import { useRootContext } from "@/context/RootContext";
+import TextareaAutosize from "react-textarea-autosize";
 
 interface Props {
   index: number;
@@ -13,20 +13,11 @@ interface Props {
 
 const PromptItem: FC<Props> = ({ index, prompt }) => {
   const { removePrompt, toggleRole, updateMessage } = useRootContext();
-
-  const inputRef = useRef<HTMLTextAreaElement | null>(null);
-
-  useEffect(() => {
-    if (inputRef.current) {
-      autosize(inputRef.current);
-    }
-  });
+  const [txt, setTxt] = useState("");
 
   useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, []);
+    setTxt(prompt.message);
+  }, [prompt.message]);
 
   return (
     <label htmlFor={`message${index}`} className={styles.promptItem}>
@@ -43,17 +34,17 @@ const PromptItem: FC<Props> = ({ index, prompt }) => {
         </span>
       </div>
       <div className={styles.promptMessage}>
-        <textarea
+        <TextareaAutosize
           id={`message${index}`}
-          ref={inputRef}
+          autoFocus
           rows={1}
           className={styles.promptMessageInput}
           placeholder={"Enter a user message here"}
           onChange={(e) => {
             updateMessage(prompt.id, e.target.value);
           }}
-          value={prompt.message}
-        ></textarea>
+          value={txt}
+        ></TextareaAutosize>
       </div>
       <div className={styles.promptRemove}>
         <Image

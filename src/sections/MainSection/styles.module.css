@@ -22,3 +22,38 @@
   padding-left: 24px;
   display: flex;
 }
+.separator {
+  display: none;
+}
+
+@media screen and (max-width: 649px) {
+  .mainSection {
+    padding: 0;
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .mainSection {
+    flex-direction: column;
+  }
+  .system {
+    flex: 1.5 1;
+  }
+  .prompts {
+    padding-left: 0;
+  }
+  .separator {
+    background-color: #f7f7f8;
+    border-bottom: 1px solid #d9d9e3;
+    border-top: 1px solid #d9d9e3;
+    display: block;
+    height: 10px;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 999px) {
+  .settings {
+    display: none;
+  }
+}
