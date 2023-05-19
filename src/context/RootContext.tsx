@@ -47,7 +47,7 @@ const defaultContext = {
   mobileMenu: false,
   openMobileMenu: () => {},
   closeMobileMenu: () => {},
-  settingsSidebar: true,
+  settingsSidebar: false,
   openSettingsSidebar: () => {},
   closeSettingsSidebar: () => {}
 };
