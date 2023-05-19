@@ -11,10 +11,20 @@
 .headingText {
   margin: 0;
   font-style: normal;
-  font-weight: 600;
-  font-size: 17px;
+  font-weight: 700;
+  font-size: 18px;
   line-height: 24px;
-  color: #202123;
+  color: rgb(32, 33, 35);
+}
+
+.openSettingsBtn {
+  display: none;
+}
+.openSettingsBtn:active {
+  background-color: #c5c5d2;
+}
+.openSettingsBtn:hover {
+  background-color: #d9d9e3;
 }
 
 @media screen and (max-width: 650px) {
@@ -25,5 +35,35 @@
   .headingInner {
     padding: 16px 16px;
     padding-bottom: 10px;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .openSettingsBtn {
+    background-color: #ececf1;
+    color: #353740;
+    font-size: 14px;
+    line-height: 20px;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 3px;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: inline-flex;
+    font-weight: 400;
+    justify-content: center;
+    position: relative;
+    transition: box-shadow 0.3s, background-color 0.3s, color 0.3s;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    text-decoration: none;
+  }
+  .gearIconWrap {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    height: 20px;
+    width: 14px;
   }
 }

@@ -30,6 +30,7 @@
   text-decoration: none;
   margin-right: 24px;
   cursor: pointer;
+  text-decoration-thickness: auto;
 }
 .link:hover {
   color: #353740;

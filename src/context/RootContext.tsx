@@ -46,7 +46,10 @@ const defaultContext = {
   setToggleError: (val: boolean) => {},
   mobileMenu: false,
   openMobileMenu: () => {},
-  closeMobileMenu: () => {}
+  closeMobileMenu: () => {},
+  settingsSidebar: true,
+  openSettingsSidebar: () => {},
+  closeSettingsSidebar: () => {}
 };
 
 const RootContext = createContext<{
@@ -76,6 +79,9 @@ const RootContext = createContext<{
   mobileMenu: boolean;
   openMobileMenu: () => void;
   closeMobileMenu: () => void;
+  settingsSidebar: boolean;
+  openSettingsSidebar: () => void;
+  closeSettingsSidebar: () => void;
 }>(defaultContext);
 
 export default function RootContextProvider({ children }: PropsWithChildren) {
@@ -86,6 +92,9 @@ export default function RootContextProvider({ children }: PropsWithChildren) {
   const [toggleError, setToggleError] = React.useState(false);
   const [modal, setModal] = React.useState(false);
   const [mobileMenu, setMobileMenu] = React.useState(false);
+  const [settingsSidebar, setSettingsSidebar] = React.useState(
+    defaultContext.settingsSidebar
+  );
 
   const [systemPrompt, setSystemPrompt] = React.useState<SystemPromptType>(
     defaultContext.systemPrompt
@@ -118,6 +127,14 @@ export default function RootContextProvider({ children }: PropsWithChildren) {
 
   const closeMobileMenu = () => {
     setMobileMenu(false);
+  };
+
+  const openSettingsSidebar = () => {
+    setSettingsSidebar(true);
+  };
+
+  const closeSettingsSidebar = () => {
+    setSettingsSidebar(false);
   };
 
   const updateSystemPrompt = (message: string) => {
@@ -314,7 +331,10 @@ export default function RootContextProvider({ children }: PropsWithChildren) {
       setToggleError,
       mobileMenu,
       openMobileMenu,
-      closeMobileMenu
+      closeMobileMenu,
+      settingsSidebar,
+      openSettingsSidebar,
+      closeSettingsSidebar
     }),
     [
       systemPrompt,
@@ -328,7 +348,8 @@ export default function RootContextProvider({ children }: PropsWithChildren) {
       modal,
       toggleError,
       setToggleError,
-      mobileMenu
+      mobileMenu,
+      settingsSidebar
     ]
   );
 

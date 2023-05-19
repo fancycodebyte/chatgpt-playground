@@ -18,10 +18,16 @@
 }
 .settings {
   height: 100%;
-  width: calc(192px + 24px);
+  width: 216px;
   padding-left: 24px;
   display: flex;
   box-sizing: border-box;
+}
+.showSidebar {
+  display: flex;
+}
+.hideSidebar {
+  display: flex;
 }
 .separator {
   display: none;
@@ -36,9 +42,6 @@
 @media screen and (max-width: 850px) {
   .mainSection {
     flex-direction: column;
-  }
-  .system {
-    flex: 1.5 1;
   }
   .prompts {
     padding-left: 0;
@@ -56,6 +59,41 @@
 
 @media screen and (max-width: 999px) {
   .settings {
+    height: 100%;
+    width: 100%;
+    padding-left: 0px;
+    position: fixed;
+    inset: 0;
+
+    z-index: 30;
+    justify-content: flex-end;
+    opacity: 0.3s;
+  }
+  .showSidebar {
+    display: flex !important;
+    animation: fadeIn 0.3s both 1;
+  }
+  .hideSidebar {
+    animation: fadeOut 0.3s both 1;
+    display: none !important;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    background: transparent;
+  }
+  to {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+  to {
+    background: transparent;
     display: none;
   }
 }

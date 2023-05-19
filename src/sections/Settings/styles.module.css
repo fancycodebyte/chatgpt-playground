@@ -1,6 +1,31 @@
 .settings {
   width: 100%;
+  box-sizing: border-box;
 }
 .select {
   margin-bottom: 16px;
+}
+.sidebarCloseBtn {
+  display: none;
+}
+
+@media screen and (max-width: 999px) {
+  .settings {
+    width: 230px;
+    background: white;
+    padding: 56px 24px 24px 24px;
+  }
+  .sidebarCloseBtn {
+    display: block;
+    background: transparent;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    font-size: 28px;
+    font-weight: 400;
+    padding: 2px;
+    position: absolute;
+    right: 10px;
+    top: 5px;
+  }
 }

@@ -6,18 +6,23 @@
   padding: 22px 14px 10px;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
 }
 .heading {
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.08em;
   line-height: 16px;
   text-transform: uppercase;
   margin: 0;
-  color: 202123;
-  margin-bottom: 12px;
+  color: #202123;
+  margin-bottom: 11px;
+  padding-left: 1px;
+  margin-top: -1px;
+  box-sizing: border-box;
 }
 .input {
+  margin-left: -2px;
   border: none;
   height: 100%;
   flex: 1;

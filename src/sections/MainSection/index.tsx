@@ -1,10 +1,14 @@
+"use client";
 import React from "react";
 import styles from "./styles.module.css";
 import System from "../System";
 import Settings from "../Settings";
 import Prompts from "../Prompts";
+import { useRootContext } from "@/context/RootContext";
 
 const MainSection = () => {
+  const { settingsSidebar, closeSettingsSidebar } = useRootContext();
+
   return (
     <div className={styles.mainSection}>
       <div className={styles.system}>
@@ -14,7 +18,12 @@ const MainSection = () => {
       <div className={styles.prompts}>
         <Prompts />
       </div>
-      <div className={styles.settings}>
+      <div
+        onClick={closeSettingsSidebar}
+        className={`${styles.settings} ${
+          settingsSidebar ? styles.showSidebar : styles.hideSidebar
+        }`}
+      >
         <Settings />
       </div>
     </div>

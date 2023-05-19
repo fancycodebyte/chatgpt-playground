@@ -1,9 +1,23 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"); */
+
+@font-face {
+  font-family: "ColfaxAI";
+  src: local("ColfaxAI"),
+    url("../../public/assets/fonts/ColfaxAIBold.woff2") format("truetype");
+  font-weight: bold;
+}
+@font-face {
+  font-family: "ColfaxAI";
+  src: local("ColfaxAI"),
+    url("../../public/assets/fonts/ColfaxAIRegular.woff2") format("truetype");
+  font-weight: 400;
+}
+
 * {
-  font-family: "Inter", sans-serif;
+  font-family: ColfaxAI, helvetica, sans-serif;
 }
 html {
-  font-family: "Inter", sans-serif;
+  font-family: ColfaxAI, helvetica, sans-serif;
   margin: 0;
 }
 body {

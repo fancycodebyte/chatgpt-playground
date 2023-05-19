@@ -16,8 +16,8 @@ const Select: FC<Props> = ({ label }) => {
   const { updateConfig } = useRootContext();
 
   const options = [
-    { value: "gpt-3.5-turbo-0301", label: "gpt-3.5-turbo-0301" },
-    { value: "gpt-3.5-turbo", label: "gpt-3.5-turbo" }
+    { value: "gpt-3.5-turbo", label: "gpt-3.5-turbo" },
+    { value: "gpt-3.5-turbo-0301", label: "gpt-3.5-turbo-0301" }
   ];
 
   const groupedOptions: readonly GroupedOption[] = [
@@ -31,8 +31,8 @@ const Select: FC<Props> = ({ label }) => {
     control: (base, state) => ({
       ...base,
       borderColor: "#C5C5D2",
-      height: "30px",
-      minHeight: "30px",
+      height: "35px",
+      minHeight: "35px",
       borderRadius: "4px",
       background: "white",
       fontSize: "13px",
@@ -53,7 +53,7 @@ const Select: FC<Props> = ({ label }) => {
     }),
     valueContainer: (provided) => ({
       ...provided,
-      height: "30px",
+      height: "35px",
       padding: "0 6px"
     }),
     indicatorSeparator: (state) => ({
@@ -61,7 +61,7 @@ const Select: FC<Props> = ({ label }) => {
     }),
     indicatorsContainer: (base) => ({
       ...base,
-      height: "30px"
+      height: "35px"
     }),
     singleValue: (props) => ({
       ...props,

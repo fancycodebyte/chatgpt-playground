@@ -39,7 +39,7 @@ const PromptItem: FC<Props> = ({ index, prompt }) => {
           autoFocus
           rows={1}
           className={styles.promptMessageInput}
-          placeholder={"Enter a user message here"}
+          placeholder={`Enter a ${prompt.role} message here.`}
           onChange={(e) => {
             updateMessage(prompt.id, e.target.value);
           }}
