@@ -96,6 +96,8 @@ export default function RootContextProvider({ children }: PropsWithChildren) {
     defaultContext.settingsSidebar
   );
 
+  const openAIStreamRef: any = React.useRef(null);
+
   const [systemPrompt, setSystemPrompt] = React.useState<SystemPromptType>(
     defaultContext.systemPrompt
   );
@@ -194,13 +196,43 @@ export default function RootContextProvider({ children }: PropsWithChildren) {
 
   const submit = useCallback(
     async (messages_: PromptType[] = []) => {
-      if (loading) return;
+      if (token === "") {
+        setError("No API Key provided");
+        setToggleError(true);
+        return;
+      } else {
+        setToggleError(false);
+        setError("");
+      }
+
+      const controller = new AbortController();
+      const signal = controller.signal;
+
+      if (loading) {
+        controller.abort();
+        openAIStreamRef.current?.cancel();
+        openAIStreamRef.current = null;
+        setLoading(false);
+        return 
+      }
+
       setLoading(true);
 
       messages_ = messages_.length ? messages_ : prompts;
 
       const decoder = new TextDecoder();
-      const response = await customApi(token, config, systemPrompt, messages_);
+      const response = await customApi(
+        token,
+        config,
+        systemPrompt,
+        messages_,
+        signal
+      );
+
+      if (!response) {
+        setLoading(false);
+        return;
+      }
 
       if (response.ok) {
         setError("");
@@ -209,6 +241,8 @@ export default function RootContextProvider({ children }: PropsWithChildren) {
 
         if (!body) return;
         const reader = body.getReader();
+        openAIStreamRef.current = reader;
+
         if (!ok) {
           // Get the error message from the response body
           const { value } = await reader.read();
@@ -235,6 +269,7 @@ export default function RootContextProvider({ children }: PropsWithChildren) {
           prompt.message += chunkValue;
           updateMessage(prompt.id, prompt.message);
         }
+        openAIStreamRef.current = null;
       } else {
         const err: any = await response.json();
         if (err.error.type === "invalid_request_error") {
@@ -256,6 +291,10 @@ export default function RootContextProvider({ children }: PropsWithChildren) {
               setError(
                 `You've reached your usage limit. See your <a href="https://platform.openai.com/account/usage" target="_blank">usage dashboard</a> and <a href="https://platform.openai.com/account/billing" target="_blank" >billing settings</a> for more details. If you have further questions, please contact us through our help center at help.openai.com.`
               );
+              setToggleError(true);
+              break;
+            case "requests":
+              setError(err.error.message);
               setToggleError(true);
               break;
             default:
