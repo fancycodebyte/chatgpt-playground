@@ -78,9 +78,6 @@
 .submitBtn:active {
   background-color: #1b5d4a;
 }
-.submitBtn:focus {
-  box-shadow: 0 0 0 3px rgba(16, 163, 127, 0.3);
-}
 .submitBtn:hover {
   background-color: #1a7f64;
 }
