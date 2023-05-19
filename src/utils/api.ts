@@ -14,7 +14,8 @@ export const customApi = async (
   apiKey: string,
   config: ConfigType,
   systemPrompt: SystemPromptType,
-  messages_: PromptType[]
+  messages_: PromptType[],
+  signal: AbortSignal
 ) => {
   const response = await fetch("/api/completion", {
     method: "POST",
@@ -22,6 +23,7 @@ export const customApi = async (
       "Content-Type": "application/json",
       Authorization: `Bearer ${apiKey}`
     },
+    signal: signal,
     body: JSON.stringify({
       ...config,
       messages: [systemPrompt, ...messages_].map(({ role, message }) => ({
@@ -47,19 +49,34 @@ export const fetchModels = async (apiKey: string) => {
 
 export const getOpenAICompletion = async (
   apiKey: string,
-  payload: OpenAIRequest
+  payload: OpenAIRequest,
+  signal: AbortSignal
 ) => {
   const encoder = new TextEncoder();
   const decoder = new TextDecoder();
 
-  const response = await fetch("https://api.openai.com/v1/chat/completions", {
+  const config: {
+    headers: {
+      Authorization: string;
+      "Content-Type": string;
+    };
+    signal: AbortSignal;
+    method: string;
+    body: string;
+  } = {
     headers: {
       Authorization: `Bearer ${apiKey}`,
       "Content-Type": "application/json"
     },
     method: "POST",
+    signal: signal,
     body: JSON.stringify(payload)
-  });
+  };
+
+  const response = await fetch(
+    "https://api.openai.com/v1/chat/completions",
+    config
+  );
 
   // Check for errors
   if (!response.ok) {
