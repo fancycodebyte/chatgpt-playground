@@ -3,6 +3,7 @@ import React, { PropsWithChildren, createContext, useCallback } from "react";
 import { ConfigType, PromptType, RoleType, SystemPromptType } from "@/types";
 import { v4 as uuidv4 } from "uuid";
 import secureLocalStorage from "react-secure-storage";
+import { customApi } from "@/utils/api";
 
 export const defaultConfig: ConfigType = {
   model: "gpt-3.5-turbo",
@@ -35,7 +36,9 @@ const defaultContext = {
   loading: true,
   modal: false,
   setModal: (val: boolean) => {},
-  error: ""
+  error: "",
+  toggleError: false,
+  setToggleError: (val: boolean) => {}
 };
 
 const RootContext = createContext<{
@@ -60,12 +63,15 @@ const RootContext = createContext<{
   setModal: (val: boolean) => void;
   loading: boolean;
   error: string;
+  toggleError: boolean;
+  setToggleError: (val: boolean) => void;
 }>(defaultContext);
 
 export default function RootContextProvider({ children }: PropsWithChildren) {
   const [token, setToken] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState("");
+  const [toggleError, setToggleError] = React.useState(false);
   const [modal, setModal] = React.useState(false);
 
   const [systemPrompt, setSystemPrompt] = React.useState<SystemPromptType>(
@@ -82,8 +88,6 @@ export default function RootContextProvider({ children }: PropsWithChildren) {
       setToken(token);
     }
   }, []);
-
-  console.log(token);
 
   const addToken = (token: string) => {
     setToken(token);
@@ -157,69 +161,68 @@ export default function RootContextProvider({ children }: PropsWithChildren) {
 
       messages_ = messages_.length ? messages_ : prompts;
 
-      try {
-        const decoder = new TextDecoder();
-        const { body, ok } = await fetch("/api/playground", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`
-          },
-          body: JSON.stringify({
-            ...config,
-            messages: [systemPrompt, ...messages_].map(({ role, message }) => ({
-              role,
-              message
-            }))
-          })
-        });
+      const decoder = new TextDecoder();
+      const response = await customApi(token, config, systemPrompt, messages_);
+
+      if (response.ok) {
+        const res = await response.json();
+
+        const { body, ok } = res;
 
         if (!body) return;
         const reader = body.getReader();
-
         if (!ok) {
           // Get the error message from the response body
           const { value } = await reader.read();
           const chunkValue = decoder.decode(value);
           const { error } = JSON.parse(chunkValue);
-
           throw new Error(
             error?.message ||
               "Failed to fetch response, check your API key and try again."
           );
         }
-
         let done = false;
-
         const prompt = {
           id: uuidv4(),
           role: "assistant",
           message: ""
         } as PromptType;
-
         setPrompts((prev) => {
           return [...prev, prompt];
         });
-
         while (!done) {
           const { value, done: doneReading } = await reader.read();
           done = doneReading;
           const chunkValue = decoder.decode(value);
           prompt.message += chunkValue;
-
           updateMessage(prompt.id, prompt.message);
         }
-      } catch (error: any) {
-        // setMessages((prev) => {
-        //   return [
-        //     ...prev,
-        //     {
-        //       id: prev.length,
-        //       role: "assistant",
-        //       message: error.message
-        //     }
-        //   ];
-        // });
+      } else {
+        const err: any = await response.json();
+        if (err.error.type === "invalid_request_error") {
+          switch (err.error.code) {
+            case "invalid_api_key":
+              setError(
+                "Invalid API key, please check your API key and try again"
+              );
+              setToggleError(true);
+              break;
+
+            default:
+              break;
+          }
+        } else {
+          switch (err.error.type) {
+            case "insufficient_quota":
+              setError(
+                `You've reached your usage limit. See your <a href="https://platform.openai.com/account/usage" target="_blank">usage dashboard</a> and <a href="https://platform.openai.com/account/billing" target="_blank" >billing settings</a> for more details. If you have further questions, please contact us through our help center at help.openai.com.`
+              );
+              setToggleError(true);
+              break;
+            default:
+              break;
+          }
+        }
       }
 
       setLoading(false);
@@ -263,7 +266,9 @@ export default function RootContextProvider({ children }: PropsWithChildren) {
       addToken,
       clearToken,
       modal,
-      setModal
+      setModal,
+      toggleError,
+      setToggleError
     }),
     [
       systemPrompt,
@@ -274,7 +279,9 @@ export default function RootContextProvider({ children }: PropsWithChildren) {
       submit,
       error,
       token,
-      modal
+      modal,
+      toggleError,
+      setToggleError
     ]
   );
 

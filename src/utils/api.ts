@@ -1,4 +1,9 @@
-import { OpenAIRequest } from "@/types";
+import {
+  ConfigType,
+  OpenAIRequest,
+  PromptType,
+  SystemPromptType
+} from "@/types";
 import {
   ParsedEvent,
   ReconnectInterval,
@@ -61,4 +66,28 @@ export const getOpenAICompletion = async (
   });
 
   return stream;
+};
+
+export const customApi = async (
+  token: string,
+  config: ConfigType,
+  systemPrompt: SystemPromptType,
+  messages_: PromptType[]
+) => {
+  const response = await fetch("/api/playground", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      ...config,
+      messages: [systemPrompt, ...messages_].map(({ role, message }) => ({
+        role,
+        message
+      }))
+    })
+  });
+
+  return response;
 };

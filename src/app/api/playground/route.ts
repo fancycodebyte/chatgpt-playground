@@ -1,21 +1,12 @@
-import type { NextApiResponse } from "next";
 import { defaultConfig } from "@/context/RootContext";
 import { OpenAIRequest } from "@/types";
 import { getOpenAICompletion } from "@/utils/api";
 
-const config = {
+export const config = {
   runtime: "edge"
 };
 
-interface Response {
-  content?: string;
-  error?: string;
-}
-
-export default async function handler(
-  req: Request,
-  res: NextApiResponse<Response>
-) {
+export async function POST(req: Request) {
   const { model, temperature, messages } = await req.json();
 
   if (!messages) {
@@ -28,11 +19,14 @@ export default async function handler(
   }
 
   const config = {
-    model: "text-ada-001",
-    // model: model || defaultConfig.model,
+    model: model || defaultConfig.model,
     temperature: temperature || defaultConfig.temperature,
-    stream: true,
-    n: 1
+    stream: true
+    // n: 1,
+    // max_tokens: 256,
+    // top_p: 1,
+    // frequency_penalty: 0,
+    // presence_penalty: 0
   };
 
   const payload: OpenAIRequest = {
@@ -44,8 +38,6 @@ export default async function handler(
     const stream = await getOpenAICompletion(token, payload);
     return new Response(stream);
   } catch (e: any) {
-    return new Response(e.message || "Error fetching response.", {
-      status: 500
-    });
+    return new Response(e.message, { status: 500 });
   }
 }

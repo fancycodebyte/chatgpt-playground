@@ -1,0 +1,28 @@
+.error {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #fdebeb;
+  align-items: flex-start;
+  color: #565869;
+  display: flex;
+  font-size: 16px;
+  line-height: 24px;
+  max-height: 100%;
+  overflow: auto;
+  padding: 20px 20px 18px;
+  white-space: pre-line;
+  z-index: 2;
+}
+.errorIcon {
+  height: 22px;
+  width: 22px;
+  margin-right: 12px;
+  margin-top: 1px;
+}
+.errorText {
+  margin: 0;
+  color: #565869;
+  font-size: 16px;
+}
