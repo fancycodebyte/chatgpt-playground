@@ -40,7 +40,7 @@ const MobileMenu = () => {
     },
     {
       name: "Playground",
-      link: "https://platform.openai.com/playground"
+      link: "/"
     },
     {
       name: "API Reference",
