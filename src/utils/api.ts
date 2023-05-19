@@ -10,6 +10,30 @@ import {
   createParser
 } from "eventsource-parser";
 
+export const customApi = async (
+  token: string,
+  config: ConfigType,
+  systemPrompt: SystemPromptType,
+  messages_: PromptType[]
+) => {
+  const response = await fetch("/api/playground", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      ...config,
+      messages: [systemPrompt, ...messages_].map(({ role, message }) => ({
+        role,
+        message
+      }))
+    })
+  });
+
+  return response;
+};
+
 export const getOpenAICompletion = async (
   token: string,
   payload: OpenAIRequest
@@ -66,28 +90,4 @@ export const getOpenAICompletion = async (
   });
 
   return stream;
-};
-
-export const customApi = async (
-  token: string,
-  config: ConfigType,
-  systemPrompt: SystemPromptType,
-  messages_: PromptType[]
-) => {
-  const response = await fetch("/api/playground", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`
-    },
-    body: JSON.stringify({
-      ...config,
-      messages: [systemPrompt, ...messages_].map(({ role, message }) => ({
-        role,
-        message
-      }))
-    })
-  });
-
-  return response;
 };
