@@ -17,23 +17,26 @@ export const customApi = async (
   messages_: PromptType[],
   signal: AbortSignal
 ) => {
-  const response = await fetch("/api/completion", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${apiKey}`
-    },
-    signal: signal,
-    body: JSON.stringify({
-      ...config,
-      messages: [systemPrompt, ...messages_].map(({ role, message }) => ({
-        role,
-        content: message
-      }))
-    })
-  });
-
-  return response;
+  try {
+    const response = await fetch("/api/completion", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`
+      },
+      signal: signal,
+      body: JSON.stringify({
+        ...config,
+        messages: [systemPrompt, ...messages_].map(({ role, message }) => ({
+          role,
+          content: message
+        }))
+      })
+    });
+    return response;
+  } catch (error) {
+    return;
+  }  
 };
 
 export const fetchModels = async (apiKey: string) => {

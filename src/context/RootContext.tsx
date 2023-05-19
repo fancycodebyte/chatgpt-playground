@@ -96,6 +96,8 @@ export default function RootContextProvider({ children }: PropsWithChildren) {
     defaultContext.settingsSidebar
   );
 
+  const openAIStreamRef: any = React.useRef(null);
+
   const [systemPrompt, setSystemPrompt] = React.useState<SystemPromptType>(
     defaultContext.systemPrompt
   );
@@ -208,6 +210,9 @@ export default function RootContextProvider({ children }: PropsWithChildren) {
 
       if (loading) {
         controller.abort();
+        openAIStreamRef.current?.cancel();
+        openAIStreamRef.current = null;
+        return 
       }
 
       setLoading(true);
@@ -230,6 +235,7 @@ export default function RootContextProvider({ children }: PropsWithChildren) {
 
         if (!body) return;
         const reader = body.getReader();
+        openAIStreamRef.current = reader;
 
         if (!ok) {
           // Get the error message from the response body
