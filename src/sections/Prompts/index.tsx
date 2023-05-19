@@ -62,12 +62,12 @@ const Prompts = () => {
           <Image src="/assets/icons/add.svg" alt="add" height={20} width={20} />
           <span className={styles.addMessageText}>Add message</span>
         </div>
-        {toggleError && <Error />}
         <div ref={bottomEl}></div>
       </div>
       <div className={styles.submitBtnWrap}>
+        {toggleError && <Error />}
         <button className={styles.submitBtn} onClick={submit}>
-          {loading ? "Loading" : "Submit"}
+          {loading ? "Cancel" : "Submit"}
         </button>
       </div>
     </div>
