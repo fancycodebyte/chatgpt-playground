@@ -42,6 +42,7 @@
 }
 .submitBtnWrap {
   padding-top: 12px;
+  position: relative;
 }
 .submitBtn {
   background-color: #10a37f;
