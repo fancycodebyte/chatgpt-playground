@@ -281,7 +281,7 @@ export default function RootContextProvider({ children }: PropsWithChildren) {
               setToggleError(true);
               break;
             default:
-              setError("An error has occurred. Please try again!");
+              setError(err.error.message);
               setToggleError(true);
               break;
           }

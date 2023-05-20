@@ -15,7 +15,7 @@ interface GroupedOption {
 const Select: FC<Props> = ({ label }) => {
   const { updateConfig } = useRootContext();
 
-  const options = [
+  const models = [
     { value: "gpt-3.5-turbo", label: "gpt-3.5-turbo", id: 'gpt-3.5-turbo' },
     { value: "gpt-3.5-turbo-0301", label: "gpt-3.5-turbo-0301", id: 'gpt-3.5-turbo' }
   ];
@@ -23,7 +23,7 @@ const Select: FC<Props> = ({ label }) => {
   const groupedOptions: readonly GroupedOption[] = [
     {
       label: "Chat",
-      options: options
+      options: models
     }
   ];
 
