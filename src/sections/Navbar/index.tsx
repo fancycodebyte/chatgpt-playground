@@ -35,7 +35,7 @@ const Navbar = () => {
           </Link>
           <Link
             className={`${styles.link} ${styles.greenLink}`}
-            href={"https://platform.openai.com/playground"}
+            href={"/"}
             target="_blank"
           >
             Playground
