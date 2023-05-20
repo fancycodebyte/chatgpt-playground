@@ -55,7 +55,7 @@ const MobileMenu = () => {
     if (item.sublinks) {
       setShowSub((prev) => !prev);
     } else if (item.link) {
-      window.open(item.link, "_blank");
+      location.href = item.link;
       closeMobileMenu;
     } else {
       closeMobileMenu();

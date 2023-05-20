@@ -16,8 +16,8 @@ const Select: FC<Props> = ({ label }) => {
   const { updateConfig } = useRootContext();
 
   const options = [
-    { value: "gpt-3.5-turbo", label: "gpt-3.5-turbo" },
-    { value: "gpt-3.5-turbo-0301", label: "gpt-3.5-turbo-0301" }
+    { value: "gpt-3.5-turbo", label: "gpt-3.5-turbo", id: 'gpt-3.5-turbo' },
+    { value: "gpt-3.5-turbo-0301", label: "gpt-3.5-turbo-0301", id: 'gpt-3.5-turbo' }
   ];
 
   const groupedOptions: readonly GroupedOption[] = [
